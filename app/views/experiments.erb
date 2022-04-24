@@ -1,0 +1,68 @@
+<% title 'Experiments' %>
+
+<section class="header">
+  <header>
+    <h1>Experiments</h1>
+    <h2>Your a/b tests and results</h2>
+  </header>
+</section>
+
+<section class="experiments">
+  <article class="container list">
+    <h3>Experiments</h3>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="state"></th>
+          <th class="index">#</th>
+          <th class="name">Name</th>
+          <th class="visitors">Visitors</th>
+          <th class="actions"></th>
+        </tr>
+      </thead>
+
+      <% @experiments.each_with_index do |experiment, i| %>
+        <tr>
+          <td class="state"><div class="<%= experiment.running ? "active" : "inactive" %>" title="<%= experiment.running ? "Running" : "Stopped" %>"></div></td>
+          <td class="index"><%= i + 1 %></td>
+
+          <td class="name">
+            <a href="/admin/experiments/<%= experiment.id %>">
+              <%= experiment.name %>
+            </a>
+          </td>
+
+          <td class="visitors">
+            <%= experiment.started_count %>
+          </td>
+
+          <td class="actions">
+            <a href="/admin/experiments/<%= experiment.id %>" data-method="delete" data-confirm="Are you sure?">
+              Delete
+            </a>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </article>
+
+  <article class="container new">
+    <h3>New Experiment</h3>
+    <pre><%= %{
+<script src="//#{request.host_with_port}/v1/abba.js"></script>
+
+<script>
+  Abba('test name')
+    .control('test a', function(){ /* ... */ })
+    .variant('test b', function(){ /* ... */ })
+    .start();
+</script>
+
+<script>
+  // On successful conversion
+  Abba('test name').complete();
+</script>
+}.strip %></pre>
+  </article>
+</section>

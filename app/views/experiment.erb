@@ -1,0 +1,124 @@
+<meta http-equiv="refresh" content="1800">
+
+<% title @experiment.name %>
+
+<section class="header">
+  <header>
+    <h1><%= @experiment.name %></h1>
+    <h2>Experiment results</h2>
+  </header>
+</section>
+
+<section class="experiment">
+  <nav class="nav">
+    <form method="get">
+      <article class="container">
+        <h3>Actions</h3>
+
+        <p>
+          <a href="/admin/experiments/<%= @experiment.id %>/toggle" data-method="put" data-confirm="Are you sure?">
+            <%= @experiment.running? ? 'End experiment' : 'Start experiment' %>
+          </a>
+        </p>
+
+        <p>
+          <a href="/admin/experiments/<%= @experiment.id %>" data-method="delete" data-confirm="Are you sure you want to delete this experiment?">
+            Delete experiment
+          </a>
+        </p>
+      </article>
+
+      <article class="container">
+        <h3>Time period</h3>
+
+        <label>
+          <span>From</span>
+          <input type="date" name="start_at" value="<%= @start_at.strftime('%F') %>">
+        </label>
+
+        <label>
+          <span>To</span>
+          <input type="date" name="end_at" value="<%= @end_at.strftime('%F') %>">
+        </label>
+      </article>
+
+      <article class="container">
+        <h3>Filter</h3>
+
+        <label>
+          <span>Browser</span>
+
+          <select name="tranche">
+            <option value="">All</option>
+            <option <%= selected(:chrome, @tranche) %> value="chrome">Chrome</option>
+            <option <%= selected(:safari, @tranche) %> value="safari">Safari</option>
+            <option <%= selected(:firefox, @tranche) %> value="firefox">Firefox</option>
+            <option <%= selected(:ie, @tranche) %> value="ie">All IE</option>
+            <option <%= selected(:ie6, @tranche) %> value="ie6">IE 6</option>
+            <option <%= selected(:ie7, @tranche) %> value="ie7">IE 7</option>
+            <option <%= selected(:ie8, @tranche) %> value="ie8">IE 8</option>
+            <option <%= selected(:ie9, @tranche) %> value="ie9">IE 9</option>
+            <option <%= selected(:ie10, @tranche) %> value="ie10">IE 10</option>
+            <option <%= selected(:mobile, @tranche) %> value="mobile">Mobile</option>
+          </select>
+        </label>
+      </article>
+    </form>
+  </nav>
+
+  <article>
+    <article class="container">
+      <h3>Variants</h3>
+
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Conversions / Visitors</th>
+            <th>Conversion rate</th>
+            <th>Probability</th>
+            <th>Improvement</th>
+          </tr>
+        </thead>
+
+        <% @variants.each do |variant| %>
+          <tr data-id="<%= variant.id %>">
+            <td class="name"><%= variant.name %></td>
+            <td class="overall"><%= variant.completed_count %> / <%= variant.started_count %></td>
+            <td class="conversion <%= dir(variant.percent_conversion_rate) %>"><%= variant.percent_conversion_rate %></td>
+            <td class="probability <%= dir(variant.probability) %>"><%= variant.probability %></td>
+            <td class="difference <%= dir(variant.percent_difference) %>"><%= variant.percent_difference %></td>
+          </tr>
+        <% end %>
+      </table>
+    </article>
+
+    <div>
+      <article class="container">
+        <h3>Conversion over time</h3>
+
+        <div class="chart"></div>
+      </article>
+    </div>
+  </article>
+</section>
+
+<script>
+  jQuery(function($){
+    var Chart = require('admin/chart');
+    var chart = new Chart({
+      el:     $('.chart'),
+      model:  <%== @experiment.to_json %>,
+      params: <%== @params.to_json %>
+    });
+    chart.fetch();
+  });
+</script>
+
+<script>
+  jQuery(function($){
+    $('form').on('change', function(){
+      $(this).submit();
+    });
+  });
+</script>

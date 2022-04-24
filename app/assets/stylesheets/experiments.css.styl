@@ -1,0 +1,50 @@
+@import './mixins'
+
+section.experiments {
+  hbox()
+
+  .list {
+    box-flex: 1
+    margin-right: 0px
+  }
+
+  .new {
+    width: 420px
+    height: 100%
+  }
+
+  pre {
+    margin: 0
+    overflow-x: auto
+  }
+
+  table tr {
+
+    td.state {
+      width: 10px;
+      vertical-align: middle;
+      & div {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        &.active {
+          background-color: #82c82d;
+        }
+        &.inactive {
+          background-color: #b90000;
+        }
+      }
+
+
+    }
+
+
+    .index {
+      width: 20px
+    }
+
+    .actions {
+      text-align: right
+    }
+  }
+}

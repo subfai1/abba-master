@@ -1,0 +1,191 @@
+@import './mixins'
+
+section.experiment {
+  hbox()
+
+  > article {
+    box-flex: 1
+    overflow: hidden
+  }
+
+  form {
+    input[type=date] {
+      font-family: "HelveticaNeue", Helvetica, Arial, sans-serif;
+      min-width: 145px
+    }
+
+    label {
+      display: block
+      overflow: hidden
+      margin-bottom: 5px
+      hbox()
+
+      span {
+        display: block
+        width: 80px
+        line-height: 25px
+
+        &:after {
+          content: ':'
+        }
+      }
+
+      input, select {
+        box-flex: 1
+      }
+
+      select {
+        display: block
+        margin-top: 3px
+      }
+
+      &:last-child {
+        margin-bottom: 0
+      }
+    }
+  }
+
+  table {
+    .conversion:empty:after,
+    .probability:empty:after,
+    .difference:empty:after {
+      content: '–'
+    }
+
+    .conversion:not(:empty):after,
+    .probability:not(:empty):after,
+    .difference:not(:empty):after {
+      content: '%'
+    }
+
+    .difference.positive:before {
+      content: '+'
+    }
+
+    .difference.positive {
+      color: #209B00
+    }
+
+    .difference.negative {
+      color: #8B1C1C
+    }
+  }
+
+  article.chart {
+    border: 1px solid #DBDBDB
+    margin: 30px
+  }
+
+  .chart {
+    position: relative
+    font-size: 10px
+
+    .areas {
+      opacity: 0.1
+    }
+
+    .line {
+      stroke-width: 2px
+    }
+
+    .circle {
+      stroke-width: 3px
+      fill: #FFF
+    }
+
+    .axis.y {
+      fill: #a2a8b1
+
+      path {
+        display: none
+      }
+    }
+
+    .axis.x {
+      fill: #a2a8b1
+
+      path {
+        fill: #DCDCDC
+      }
+    }
+
+    // Line colors
+
+    .variants {
+      fill: none
+    }
+
+    .variant-0 .circle { stroke: #A7D3DC }
+    .variant-1 .circle { stroke: #FF8A60 }
+    .variant-2 .circle { stroke: #9D96D3 }
+    .variant-3 .circle { stroke: #d62728 }
+    .variant-4 .circle { stroke: #9467bd }
+    .variant-5 .circle { stroke: #8c564b }
+    .variant-6 .circle { stroke: #e377c2 }
+    .variant-7 .circle { stroke: #7f7f7f }
+    .variant-8 .circle { stroke: #bcbd22 }
+    .variant-9 .circle { stroke: #17becf }
+
+    .variant-0 .line { stroke: #A7D3DC }
+    .variant-1 .line { stroke: #FF8A60 }
+    .variant-2 .line { stroke: #9D96D3 }
+    .variant-3 .line { stroke: #d62728 }
+    .variant-4 .line { stroke: #9467bd }
+    .variant-5 .line { stroke: #8c564b }
+    .variant-6 .line { stroke: #e377c2 }
+    .variant-7 .line { stroke: #7f7f7f }
+    .variant-8 .line { stroke: #bcbd22 }
+    .variant-9 .line { stroke: #17becf }
+
+    .areas   { display: none }
+    .area-0 { fill: #A7D3DC  }
+    .area-1 { fill: #FF8A60  }
+    .area-2 { fill: #9D96D3  }
+    .area-3 { fill: #d62728  }
+    .area-4 { fill: #9467bd  }
+    .area-5 { fill: #8c564b  }
+    .area-6 { fill: #e377c2  }
+    .area-7 { fill: #7f7f7f  }
+    .area-8 { fill: #bcbd22  }
+    .area-9 { fill: #17becf }
+
+    // Legend
+
+    ul.legend {
+      list-style: none
+      margin: 0
+      position: absolute
+      top: -20px
+      right: 0px
+      overflow: hidden
+      color: #696969
+      font-size: 11px
+
+      li {
+        margin-right: 32px
+        position: relative
+      }
+
+      li:after {
+        content: ''
+        display: block
+        width: 25px
+        height: 3px
+        position: absolute
+        right: -32px
+        top: 5px
+      }
+
+      .legend-0:after { background-color: #A7D3DC  }
+      .legend-1:after { background-color: #FF8A60  }
+      .legend-2:after { background-color: #9D96D3  }
+      .legend-3:after { background-color: #d62728  }
+      .legend-4:after { background-color: #9467bd  }
+      .legend-5:after { background-color: #8c564b  }
+      .legend-6:after { background-color: #e377c2  }
+      .legend-7:after { background-color: #7f7f7f  }
+      .legend-8:after { background-color: #bcbd22  }
+      .legend-9:after { background-color: #17becf }
+    }
+  }
+}
